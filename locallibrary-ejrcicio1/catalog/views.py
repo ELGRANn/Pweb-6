@@ -30,3 +30,8 @@ def index(request):
     }
     # Renderizar la plantilla HTML index.html con los datos en la variable de contexto
     return render(request, 'index.html', context=context)
+from django.views import generic
+
+class BookListView(generic.ListView):
+    model = Book
+    paginate_by = 10
