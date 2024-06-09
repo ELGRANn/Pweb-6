@@ -26,6 +26,7 @@ class BookAdmin(admin.ModelAdmin):
 
     display_genre.short_description = 'Genre'
 
+
 class BookInstanceAdmin(admin.ModelAdmin):
     list_display = ('book', 'status', 'due_back', 'id')
     list_filter = ('status', 'due_back')
@@ -33,10 +34,10 @@ class BookInstanceAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (None, {
-            'fields': ('book', 'imprint', 'id')
-        }), 
+            'fields': ('book','imprint', 'id')
+        }),
         ('Availability', {
-            'fields': ('status', 'due_back')
+            'fields': ('status', 'due_back','borrower')
         }),
     )
 
