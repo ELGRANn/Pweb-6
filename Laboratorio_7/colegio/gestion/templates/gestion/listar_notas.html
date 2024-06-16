@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Notas</title>
+</head>
+<body>
+    <h1>Lista de Notas</h1>
+    <ul>
+        {% for nota in notas %}
+            <li>{{ nota }}</li>
+        {% empty %}
+            <li>No hay notas registradas.</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'agregar_nota' %}">Agregar Nota</a>
+</body>
+</html>
