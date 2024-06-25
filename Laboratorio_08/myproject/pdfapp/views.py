@@ -6,6 +6,7 @@ from xhtml2pdf import pisa
 from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
 import smtplib  
+from django.conf import settings
 
 
 def render_to_pdf(template_src, context_dict):
@@ -38,26 +39,28 @@ def enviar_correo(request):
 from django.conf import settings
 
 def enviar_correo(request):
-    subject = "Asunto con ñ"
-    context = {
-        'titulo': "Este es el título del correo",
-        'contenido': "Este es el cuerpo del mensaje con ñ y otros caracteres especiales."
-    }
-    from_email = settings.EMAIL_HOST_USER
-    recipient_list = ['destinatario@example.com']
+    if request.method == 'POST':
+        destinatario = request.POST.get('destinatario')
+        asunto = request.POST.get('asunto')
+        contenido = request.POST.get('contenido')
 
-    try:
-        message_html = render_to_string('pdfapp/plantilla_mail.html', context)
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [destinatario]
 
-        email = EmailMessage(
-            subject=subject,
-            body=message_html,
-            from_email=from_email,
-            to=recipient_list
-        )
-        email.content_subtype = 'html'  # Indica que el cuerpo del mensaje está en formato HTML
-        email.encoding = 'utf-8'  # Establecer la codificación a UTF-8
-        email.send()
-        return HttpResponse("Correo enviado exitosamente")
-    except smtplib.SMTPException as e:
-        return HttpResponse(f"Error al enviar el correo: {str(e)}", status=500)
+        try:
+            message_html = render_to_string('pdfapp/plantilla_mail.html', {'titulo': asunto, 'contenido': contenido})
+
+            email = EmailMessage(
+                subject=asunto,
+                body=message_html,
+                from_email=from_email,
+                to=recipient_list
+            )
+            email.content_subtype = 'html'  
+            email.send()
+
+            return HttpResponse("Correo enviado exitosamente")
+        except Exception as e:
+            return HttpResponse(f"Error al enviar el correo: {str(e)}", status=500)
+
+    return render(request, 'pdfapp/formulario_correo.html')
