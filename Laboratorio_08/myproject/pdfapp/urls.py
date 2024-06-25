@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import generate_pdf
+from .views import generate_invoice
 
 urlpatterns = [
-    path('generate_pdf/', generate_pdf, name='generate_pdf'),
+    path('invoice/', generate_invoice, name='generate_invoice'),
 ]

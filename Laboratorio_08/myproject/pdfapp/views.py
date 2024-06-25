@@ -1,16 +1,30 @@
+from io import BytesIO
+from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import get_template
-from weasyprint import HTML
+from xhtml2pdf import pisa
 
-def generate_pdf(request):
-    template = get_template('pdfapp/sample_template.html')
+def render_to_pdf(template_src, context_dict):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    result = BytesIO()
+    pdf = pisa.pisaDocument(BytesIO(html.encode("UTF-8")), result)
+    if not pdf.err:
+        return HttpResponse(result.getvalue(), content_type='application/pdf')
+    return None
+
+def generate_invoice(request):
     context = {
-        'title': 'Rendirizador de PDF',
-        'content': 'PDF generado desde HTML',
+        'date': '2024-06-24',
+        'company_name': 'My Company',
+        'company_address': '1234 Street, City, Country',
+        'client_name': 'John Doe',
+        'client_address': '5678 Avenue, City, Country',
+        'items': [
+            {'name': 'Item 1', 'price': '$10.00'},
+            {'name': 'Item 2', 'price': '$20.00'},
+            {'name': 'Item 3', 'price': '$30.00'},
+        ],
+        'total': '$60.00'
     }
-    html_content = template.render(context)
-    pdf_file = HTML(string=html_content).write_pdf()
-
-    response = HttpResponse(pdf_file, content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="sample.pdf"'
-    return response
+    return render_to_pdf('pdfapp/invoice.html', context)
