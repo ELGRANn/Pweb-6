@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
+from django.template.loader import render_to_string
 
 
 def render_to_pdf(template_src, context_dict):
@@ -32,11 +33,18 @@ def generate_invoice(request):
     return render_to_pdf('pdfapp/invoice.html', context)
 
 def enviar_correo(request):
-    asunto = 'asunto del correo'
-    mensaje = 'mensaje del correo'
-    email = 'tu_email@gmail.com'
-    listaContendora = ['destinatario1@gmail.com', 'destinatario2@gmail.com']
-    
-    send_mail(asunto,mensaje, email,  listaContendora)
+    context = {
+        'titulo': 'Bienvenido',
+        'contenido': 'Gracias por formar parte de esta página',
+    }
+    message = render_to_string('/pdfapp/plantilla_mail.html', context)
+    email = EmailMessage(
+        'Asunto del correo',
+        message,
+        'tu_email@gmail.com',
+        ['destinatario1@gmail.com'],
+    )
+    email.content_subtype = 'html'  
+    email.send()
     
     return HttpResponse("Correo enviado exitosamente")
