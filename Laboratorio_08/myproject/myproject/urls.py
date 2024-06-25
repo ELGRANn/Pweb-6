@@ -16,8 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from pdfapp.views import enviar_correo
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('pdfapp/', include('pdfapp.urls')),
+    path('send_correo/', enviar_correo, name='sendCorreo'),
 ]
