@@ -3,6 +3,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.core.mail import send_mail
+
 
 def render_to_pdf(template_src, context_dict):
     template = get_template(template_src)
@@ -28,3 +30,13 @@ def generate_invoice(request):
         'total': '$60.00'
     }
     return render_to_pdf('pdfapp/invoice.html', context)
+
+def enviar_correo(request):
+    asunto = 'asunto del correo'
+    mensaje = 'mensaje del correo'
+    email = 'tu_email@gmail.com'
+    listaContendora = ['destinatario1@gmail.com', 'destinatario2@gmail.com']
+    
+    send_mail(asunto,mensaje, email,  listaContendora)
+    
+    return HttpResponse("Correo enviado exitosamente")
