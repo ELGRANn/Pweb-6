@@ -15,11 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from pdfapp.views import enviar_correo
+from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pdfapp/', include('pdfapp.urls')),
-    path('send_correo/', enviar_correo, name='sendCorreo'),
 ]

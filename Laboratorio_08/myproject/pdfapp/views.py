@@ -5,6 +5,8 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.core.mail import send_mail, EmailMessage
 from django.template.loader import render_to_string
+import smtplib  
+from django.conf import settings
 
 
 def render_to_pdf(template_src, context_dict):
@@ -33,18 +35,32 @@ def generate_invoice(request):
     return render_to_pdf('pdfapp/invoice.html', context)
 
 def enviar_correo(request):
-    context = {
-        'titulo': 'Bienvenido',
-        'contenido': 'Gracias por formar parte de esta página',
-    }
-    message = render_to_string('/pdfapp/plantilla_mail.html', context)
-    email = EmailMessage(
-        'Asunto del correo',
-        message,
-        'tu_email@gmail.com',
-        ['destinatario1@gmail.com'],
-    )
-    email.content_subtype = 'html'  
-    email.send()
-    
-    return HttpResponse("Correo enviado exitosamente")
+    from django.core.mail import send_mail
+from django.conf import settings
+
+def enviar_correo(request):
+    if request.method == 'POST':
+        destinatario = request.POST.get('destinatario')
+        asunto = request.POST.get('asunto')
+        contenido = request.POST.get('contenido')
+
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [destinatario]
+
+        try:
+            message_html = render_to_string('pdfapp/plantilla_mail.html', {'titulo': asunto, 'contenido': contenido})
+
+            email = EmailMessage(
+                subject=asunto,
+                body=message_html,
+                from_email=from_email,
+                to=recipient_list
+            )
+            email.content_subtype = 'html'  
+            email.send()
+
+            return HttpResponse("Correo enviado exitosamente")
+        except Exception as e:
+            return HttpResponse(f"Error al enviar el correo: {str(e)}", status=500)
+
+    return render(request, 'pdfapp/formulario_correo.html')

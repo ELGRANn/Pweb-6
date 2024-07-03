@@ -15,18 +15,12 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'miguelaach123@gmail.com'
-EMAIL_HOST_PASSWORD = 'xerw yhpg bpnt oehp'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-0uz%g98zhki@b6=8x_dd7-uju=05_dmb&)%9jc9fggk3%tk_cb'
+SECRET_KEY = 'django-insecure-p(yjssivwx6&sl8uohg+&vwcw9mqj9mpc18m1nb6k4177z3gru'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -43,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'pdfapp',
+    'myapp'
 ]
 
 MIDDLEWARE = [
