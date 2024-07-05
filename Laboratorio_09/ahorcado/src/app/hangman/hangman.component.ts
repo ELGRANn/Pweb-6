@@ -25,7 +25,20 @@ export class HangmanComponent implements OnInit {
     this.actualizarImagenAhorcado();
   }
 
+  adivinar(letra: string) {
+    if (this.palabraActual.includes(letra)) {
+      for (let i = 0; i < this.palabraActual.length; i++) {
+        if (this.palabraActual[i] === letra) {
+          this.letrasAdivinadas[i] = letra;
+        }
+      }
+    } else {
+      this.intentosRestantes--;
+      this.actualizarImagenAhorcado();
+    }
+  }
+
   actualizarImagenAhorcado() {
-    this.imagenAhorcado = `assets/images/${7 - this.intentosRestantes}.png`;
+    this.imagenAhorcado = `assets/images/${7 - this.intentosRestantes}.svg`;
   }
 }
