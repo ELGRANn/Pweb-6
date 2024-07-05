@@ -14,5 +14,8 @@ export class HangmanComponent implements OnInit {
 
   constructor() { }
 
+  ngOnInit(): void {
+    this.nuevaPalabra();
+  }
 
 }
