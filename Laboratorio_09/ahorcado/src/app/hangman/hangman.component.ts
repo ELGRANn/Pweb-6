@@ -25,4 +25,7 @@ export class HangmanComponent implements OnInit {
     this.actualizarImagenAhorcado();
   }
 
+  actualizarImagenAhorcado() {
+    this.imagenAhorcado = `assets/images/${7 - this.intentosRestantes}.png`;
+  }
 }
