@@ -21,6 +21,8 @@ export class HangmanComponent implements OnInit {
   nuevaPalabra() {
     this.palabraActual = this.palabras[Math.floor(Math.random() * this.palabras.length)];
     this.letrasAdivinadas = Array(this.palabraActual.length).fill('_');
+    this.intentosRestantes = 7;
+    this.actualizarImagenAhorcado();
   }
 
 }
