@@ -1,12 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-hangman',
-  //standalone: true,
-  //imports: [],
   templateUrl: './hangman.component.html',
-  styleUrl: './hangman.component.css'
+  styleUrls: ['./hangman.component.css']
 })
-export class HangmanComponent {
+export class HangmanComponent implements OnInit {
+  palabras: string[] = ['palabraPrueba', 'mensaje', 'unsa', 'programa', 'developer'];
+  palabraActual: string = '';
+  letrasAdivinadas: string[] = [];
+  intentosRestantes: number = 7;
+  imagenAhorcado: string = '';
+
+  constructor() { }
+
 
 }
