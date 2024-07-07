@@ -3,13 +3,12 @@
     <h1>Hangman Game</h1>
     <img [src]="imagenAhorcado" alt="Ahorcado">
     <div class="palabra">
-      <span *ngFor="let letra of letrasAdivinadas">{{ letra }}</span>
+        <span *ngFor="let letra of letrasAdivinadas">{{ letra }}</span>
     </div>
     <div class="letras">
-      <button *ngFor="let letra of 'abcdefghijklmnopqrstuvwxyz'" (click)="adivinar(letra)">
+        <button *ngFor="let letra of 'abcdefghijklmnopqrstuvwxyz'" (click)="adivinar(letra)">
         {{ letra }}
       </button>
     </div>
     <button (click)="nuevaPalabra()">Nueva Palabra</button>
-  </div>
-  
+</div>

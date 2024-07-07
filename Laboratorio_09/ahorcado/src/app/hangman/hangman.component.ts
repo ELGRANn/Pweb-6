@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-hangman',
+  standalone: true,
   templateUrl: './hangman.component.html',
   styleUrls: ['./hangman.component.css']
 })

@@ -1,0 +1,21 @@
+.hangman-container {
+    text-align: center;
+}
+
+.palabra {
+    font-size: 2rem;
+    margin: 20px;
+}
+
+.letras {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.letras button {
+    margin: 5px;
+    padding: 10px;
+    font-size: 1.2rem;
+}
